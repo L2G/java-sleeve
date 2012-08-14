@@ -122,7 +122,7 @@ module Java
         cmd_args += files
         unless Buildr.application.options.dryrun
           info 'Running apt'
-          trace (['apt'] + cmd_args).join(' ')
+          trace((['apt'] + cmd_args).join(' '))
           Java.load
           ::Java::com.sun.tools.apt.Main.process(cmd_args.to_java(::Java::java.lang.String)) == 0 or
             fail 'Failed to process annotations, see errors above'
@@ -159,7 +159,7 @@ module Java
         unless Buildr.application.options.dryrun
           mkdir_p options[:output] if options[:output]
           info "Compiling #{files.size} source files in #{name}"
-          trace (['javac'] + cmd_args).join(' ')
+          trace((['javac'] + cmd_args).join(' '))
           Java.load
           ::Java::com.sun.tools.javac.Main.compile(cmd_args.to_java(::Java::java.lang.String)) == 0 or
             fail 'Failed to compile, see errors above'
@@ -211,7 +211,7 @@ module Java
         name = options[:name] || Dir.pwd
         unless Buildr.application.options.dryrun
           info "Generating Javadoc for #{name}"
-          trace (['javadoc'] + cmd_args).join(' ')
+          trace((['javadoc'] + cmd_args).join(' '))
           Java.load
           ::Java::com.sun.tools.javadoc.Main.execute(cmd_args.to_java(::Java::java.lang.String)) == 0 or
             fail 'Failed to generate Javadocs, see errors above'

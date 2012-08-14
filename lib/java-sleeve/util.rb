@@ -51,7 +51,7 @@ module JavaSleeve
       cmd << '-S' << options.delete(:command) if options[:command]
       cmd.concat args.flatten
       cmd.push options
-      sh *cmd do |ok, status|
+      sh(*cmd) do |ok, status|
         ok or fail "Command ruby failed with status (#{status ? status.exitstatus : 'unknown'}): [#{cmd.join(" ")}]"
       end
     end
@@ -116,7 +116,7 @@ end
 
 
 class Object #:nodoc:
-  unless defined? instance_exec # 1.9
+  unless method_defined?(:instance_exec) # 1.9
     module InstanceExecMethods #:nodoc:
     end
     include InstanceExecMethods
@@ -145,7 +145,7 @@ class Object #:nodoc:
 end
 
 module Kernel #:nodoc:
-  unless defined? tap # 1.9
+  unless method_defined?(:tap) # 1.9
     def tap
       yield self if block_given?
       self
@@ -154,7 +154,7 @@ module Kernel #:nodoc:
 end
 
 class Symbol #:nodoc:
-  unless defined? to_proc # 1.9
+  unless method_defined?(:to_proc) # 1.9
     # Borrowed from Ruby 1.9.
     def to_proc
       Proc.new{|*args| args.shift.__send__(self, *args)}
@@ -179,7 +179,7 @@ end
 class OpenObject < Hash
 
   def initialize(source=nil, &block)
-    super &block
+    super(&block)
     update source if source
   end
 
