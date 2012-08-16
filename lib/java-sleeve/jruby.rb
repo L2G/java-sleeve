@@ -106,9 +106,8 @@ module Java
       add_path[tools_jar] if tools_jar
 
       classpath.map! { |path| Proc === path ? path.call : path }
-      Buildr.artifacts(classpath).map(&:to_s).each do |path|
-        file(path).invoke
-        add_path[path]
+      classpath.each do |path|
+        add_path[path.to_s]
       end
 
       @loaded = true
